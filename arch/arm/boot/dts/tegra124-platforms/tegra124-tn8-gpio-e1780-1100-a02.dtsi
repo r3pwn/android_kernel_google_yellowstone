@@ -1,0 +1,87 @@
+#include <dt-bindings/gpio/tegra-gpio.h>
+
+/ {
+	gpio: gpio@6000d000 {
+		gpio-init-names = "default";
+		gpio-init-0 = <&gpio_default>;
+
+		gpio_default: default {
+			gpio-input = <  
+					TEGRA_GPIO(C, 7) /* USB2_DET_INT */
+					TEGRA_GPIO(G, 0) /* BOOT_SELECT_0 */
+					TEGRA_GPIO(G, 1) /* BOOT_SELECT_1 */
+					TEGRA_GPIO(G, 2) /* BOOT_SELECT_2 */
+					TEGRA_GPIO(G, 3) /* BOOT_SELECT_3 */
+					TEGRA_GPIO(G, 4) /* RAM_CODE */
+					TEGRA_GPIO(H, 0) /* FTM */
+					TEGRA_GPIO(H, 4) /* AUDIO_CODEC_INT */
+					TEGRA_GPIO(H, 6) /* SNN_USB1_ID */
+					TEGRA_GPIO(H, 7) /* TEMP_ALERT */
+					TEGRA_GPIO(I, 3) /* SENSOR_HUB_SPI_CHIP_SEL */
+					TEGRA_GPIO(I, 4) /* AUDIO_CODEC_SEL(0: 5639, 1: 5642) */
+					TEGRA_GPIO(I, 5) /* HW_ID_1 */
+					TEGRA_GPIO(I, 6) /* HW_ID_2 */
+					TEGRA_GPIO(I, 7) /* HW_ID_3 */
+					TEGRA_GPIO(J, 0) /* CHARGER_INT */
+					TEGRA_GPIO(J, 2) /* SYSTEM_OVERHEAT_ALERT */
+					TEGRA_GPIO(K, 0) /* MODEM_PWR_REPORT */
+					TEGRA_GPIO(K, 2) /* TOUCH_PANEL_INT */
+					TEGRA_GPIO(N, 7) /* HDMI_HPD (active_low) */
+					TEGRA_GPIO(O, 4) /* SENSOR_HUB_SPI_CHIP_SEL */
+					TEGRA_GPIO(O, 5) /* MODEM_COLDBOOT */
+					TEGRA_GPIO(Q, 0) /* PWR_BUTTON (active_low) */
+					TEGRA_GPIO(Q, 6) /* VOL_UP_BUTTON (active_low) */
+					TEGRA_GPIO(Q, 7) /* VOL_DW_BUTTON (active_low) */
+					TEGRA_GPIO(R, 7) /* SIM_CD_AP (active_low) */
+					TEGRA_GPIO(S, 0) /* DOCK_DETEC */
+					TEGRA_GPIO(S, 1) /* SENSOR_HUB_STATUS_1 */
+					TEGRA_GPIO(U, 5) /* WIFI_WAKEUP */
+					TEGRA_GPIO(U, 6) /* BT_WAKEUP */
+					TEGRA_GPIO(V, 0) /* MODEM_WAKEUP */
+					TEGRA_GPIO(V, 1) /* MODEM_DETECT */
+					TEGRA_GPIO(V, 2) /* SDMMC3_CD */
+					TEGRA_GPIO(X, 3) /* CM3217_SENSOR_INT (active_low) */
+					TEGRA_GPIO(X, 5) /* HS_BUTTON(from HEADSET_MIC) */
+					TEGRA_GPIO(FF, 0)/* SAR_SENSOR_INT */
+					>;
+			gpio-output-low = <
+					TEGRA_GPIO(H, 2) /* LCD_BACKLIGHT_ENA */
+					TEGRA_GPIO(H, 3) /* LCD_RST */
+					TEGRA_GPIO(H, 5) /* GPS_ENA */
+					TEGRA_GPIO(I, 0) /* PMU_START */
+					TEGRA_GPIO(K, 1) /* TOUCH_SHUTDOWN */
+					TEGRA_GPIO(K, 4) /* TOUCH_RESET */
+					TEGRA_GPIO(K, 5) /* EN_BAT_SMB */
+					TEGRA_GPIO(K, 6) /* HDMI_5V_ENA */
+					TEGRA_GPIO(N, 4) /* USB_VBUS_ENA */
+					TEGRA_GPIO(N, 5) /* EN_AVDD_HDMI_PLL */
+					TEGRA_GPIO(O, 6) /* AP_WAKEUP_MODEM */
+					TEGRA_GPIO(Q, 1) /* SENSOR_HUB_POWER_ENA */
+					TEGRA_GPIO(Q, 3) /* SENSOR_HUB_BOOT_CFG_1 */
+					TEGRA_GPIO(R, 0) /* SDCARD_PWR_ENA */
+					TEGRA_GPIO(R, 1) /* BT_ENA */
+					TEGRA_GPIO(R, 2) /* AUDIO_CODEC_ENA */
+					TEGRA_GPIO(R, 5) /* GPU_PWR_RQST (to pmic) */
+					TEGRA_GPIO(S, 3) /* AP_RESET_MODEM */
+					TEGRA_GPIO(S, 4) /* AP_ENA_MODEM_PWR */
+					TEGRA_GPIO(S, 6) /* kb_row14_ps6 - SB_POWER_EN DVT3 */
+					TEGRA_GPIO(U, 5) /* WIFI_WAKE_AP */
+					TEGRA_GPIO(U, 6) /* BT_WAKE_AP */
+					TEGRA_GPIO(X, 1) /* 12V_Detection_Pin */
+					TEGRA_GPIO(X, 6) /* NFC_REG_PU */
+					TEGRA_GPIO(X, 7) /* WIFI_ENA */
+					TEGRA_GPIO(BB, 4) /* CAMERA_POWER_DOWN */
+					TEGRA_GPIO(BB, 6) /* HDMI_VSYNC_CTRL */
+					TEGRA_GPIO(BB, 7) /* USB_CHARGE_EN */
+					TEGRA_GPIO(CC, 1) /* FRONT_CAMERA_SHUTDOWN */
+					TEGRA_GPIO(EE, 1) /* AP_WAKEUP_BT */
+					>;
+			gpio-output-high = <
+					TEGRA_GPIO(I, 2) /* SAR_DETECT (active_low) */
+					TEGRA_GPIO(Q, 2) /* SENSOR_HUB_BOOT_CFG_0 */
+					TEGRA_GPIO(Q, 4) /* SENSOR_HUB_RESET */
+					TEGRA_GPIO(FF, 1) /* default enable 5V VBUS for USB3.0 host mode on dock */
+					>;
+		};
+	};
+};

@@ -1,0 +1,155 @@
+/dts-v1/;
+
+#include "tegra124.dtsi"
+#include "tegra124-platforms/tegra124-tn8-gpio-e1780-1100-a02.dtsi"
+#include "tegra124-platforms/tegra124-tn8-pinmux-e1780-1100-a02.dtsi"
+#include "tegra124-platforms/tegra124-tn8-keys-e1780-1100-a02.dtsi"
+
+/ {
+	model = "NVIDIA Tegra124 Ardbeg";
+	compatible = "nvidia,ardbeg", "nvidia,tegra124";
+	nvidia,dtsfilename = __FILE__;
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	chosen {
+		bootargs = "tegraid=40.0.0.00.00 vmalloc=256M video=tegrafb console=ttyS0,115200n8 earlyprintk";
+		linux,initrd-start = <0x85000000>;
+		linux,initrd-end = <0x851bc400>;
+	};
+        serial@70006000 {
+                compatible = "nvidia,tegra114-hsuart";
+                status = "okay";
+        };
+
+        serial@70006040 {
+                compatible = "nvidia,tegra114-hsuart";
+                status = "okay";
+        };
+
+        serial@70006200 {
+                compatible = "nvidia,tegra114-hsuart";
+                status = "okay";
+        };
+
+	memory@0x80000000 {
+		device_type = "memory";
+		reg = <0x80000000 0x80000000>;
+	};
+
+	i2c@7000c000 {
+		status = "okay";
+		clock-frequency = <400000>;
+	};
+
+	i2c@7000c400 {
+		status = "okay";
+		clock-frequency = <100000>;
+
+		iqs253@44 {
+			compatible="azoteq,iqs253";
+			reg=<0x44>;
+			vendor="Azoteq";
+			proximity,max-range="2";/*2cm*/
+			proximity,integration-time="16000000";/*16msec*/
+			proximity,power-consumed="1.67";/*approxmA*/
+			rdy-gpio = <&gpio TEGRA_GPIO(FF, 0) GPIO_ACTIVE_LOW>;
+			sar-gpio = <&gpio TEGRA_GPIO(I, 2) GPIO_ACTIVE_LOW>;
+		};
+
+		bq28z610: bq28z610@55 {
+			compatible = "ti,bq28z610";
+			reg = <0x55>;
+			tz-name = "battery-temp";
+			alert-threshold = <0>;          /* 1% SOC */
+			one-percent-alerts = <1>;
+			valert-max = <5100>;            /* not use */
+			valert-min = <0>;            /* not use */
+			vreset-threshold = <2400>;
+			vreset-disable = <1>;           /* not use */
+			hib-threshold = <48>;           /* 9.984%/hr */
+			hib-active-threshold = <128>;   /* 160mV */
+			bits = <18>;
+			rcomp = <57>;
+			rcomp-seg = <0x0200>;
+			soccheck-a = <119>;
+			soccheck-b = <121>;
+			ocvtest = <55952>;
+			soc_shift = <3>;
+			data-tbl = <0x98 0x80 0xB3 0x50 0xB7 0x90 0xB9 0x00
+				0xBA 0x70 0xBC 0x10 0xBC 0x50 0xBC 0xA0
+				0xBD 0x20 0xBE 0x30 0xBF 0x40 0xC2 0xF0
+				0xC4 0x20 0xC7 0xE0 0xCB 0xF0 0xD0 0x90
+				0x00 0x40 0x06 0x70 0x0E 0x50 0x12 0x00
+				0x18 0xD0 0x33 0x10 0x31 0x40 0x35 0xD0
+				0x18 0xD0 0x19 0x00 0x0B 0xF0 0x0C 0x10
+				0x0D 0x10 0x07 0x90 0x08 0x00 0x08 0x00>;
+		};
+	};
+
+	i2c@7000c500 {
+		status = "okay";
+		clock-frequency = <400000>;
+	};
+
+	i2c@7000c700 {
+		status = "okay";
+		clock-frequency = <100000>;
+	};
+
+	i2c@7000d000 {
+		status = "okay";
+		clock-frequency = <400000>;
+		nvidia,bit-banging-xfer-after-shutdown;
+	};
+
+	i2c@7000d100 {
+		status = "okay";
+		clock-frequency = <400000>;
+	};
+
+	spi@7000d400 {
+		status = "okay";
+		spi-max-frequency = <25000000>;
+	};
+
+	spi@7000d800 {
+		status = "okay";
+		spi-max-frequency = <25000000>;
+	};
+
+	spi@7000da00 {
+		status = "okay";
+		spi-max-frequency = <25000000>;
+	};
+
+	pmc {
+		status = "okay";
+		nvidia,invert-interrupt;
+		nvidia,suspend-mode = <0>;
+		nvidia,cpu-pwr-good-time = <500>;
+		nvidia,cpu-pwr-off-time = <300>;
+		nvidia,core-pwr-good-time = <3845 3845>;
+		nvidia,core-pwr-off-time = <2000>;
+		nvidia,core-power-req-active-high;
+		nvidia,sys-clock-req-active-high;
+	};
+
+	xusb@70090000 {
+		/* nvidia,uses_external_pmic;
+		nvidia,gpio_controls_muxed_ss_lanes; */
+		nvidia,gpio_ss1_sata = <0>;
+		nvidia,portmap = <0x703>; /* SSP0, SSP1 USB2P0, USB2P1, USBP2 */
+		nvidia,ss_portmap = <0x10>; /* SSP0 on USB2P0, SSP1 on USB2P2 */
+		nvidia,lane_owner = <6>; /* USB3P0 USB3P1 */
+		nvidia,ulpicap = <0>; /* No ulpi support. can we remove */
+		nvidia,supply_utmi_vbuses = "usb_vbus0", "usb_vbus1", "usb_vbus2";
+		nvidia,supply_s3p3v = "hvdd_usb";
+		nvidia,supply_s1p8v = "avdd_pll_utmip";
+		nvidia,supply_vddio_hsic = "vddio_hsic";
+		nvidia,supply_s1p05v = "avddio_usb";
+		/* hsic config values in order defined in structure */
+		nvidia,hsic0 = /bits/8 <0x1 0x1 0x8 0xa 0 0 1 0x22 0>;
+		status = "okay";
+	};
+};
